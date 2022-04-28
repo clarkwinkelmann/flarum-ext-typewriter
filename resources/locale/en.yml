@@ -1,0 +1,12 @@
+clarkwinkelmann-typewriter:
+    admin:
+        settings:
+            defaultFile: Default sound file
+            sounds: Additional sounds
+            head:
+                keys: Keys
+                file: File
+            add: Add sound
+
+    forum:
+        mute: Mute typing sounds

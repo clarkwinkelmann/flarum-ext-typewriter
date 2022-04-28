@@ -1,0 +1,36 @@
+{
+    "name": "clarkwinkelmann/flarum-ext-typewriter",
+    "description": "Plays custom sounds in the reply composer",
+    "keywords": [
+        "flarum",
+        "sounds"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^1.2",
+        "ext-json": "*"
+    },
+    "authors": [
+        {
+            "name": "Clark Winkelmann",
+            "homepage": "https://clarkwinkelmann.com/",
+            "email": "clark.winkelmann@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/clarkwinkelmann/flarum-ext-typewriter"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Typewriter",
+            "category": "feature",
+            "icon": {
+                "name": "fas fa-music",
+                "backgroundColor": "#684ba6",
+                "color": "#fff"
+            }
+        }
+    }
+}
