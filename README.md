@@ -29,7 +29,10 @@ You can [contact me](https://clarkwinkelmann.com/flarum) to sponsor additional f
 
 Support is offered on a "best effort" basis through the Flarum community thread.
 
+**Sponsors**: [Billy Wilcosky (`@010101`)](https://www.wilcosky.com/)
+
 ## Links
 
 - [GitHub](https://github.com/clarkwinkelmann/flarum-ext-typewriter)
 - [Packagist](https://packagist.org/packages/clarkwinkelmann/flarum-ext-typewriter)
+- [Discuss](https://discuss.flarum.org/d/30720)

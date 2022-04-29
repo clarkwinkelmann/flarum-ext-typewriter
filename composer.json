@@ -20,7 +20,8 @@
         }
     ],
     "support": {
-        "source": "https://github.com/clarkwinkelmann/flarum-ext-typewriter"
+        "source": "https://github.com/clarkwinkelmann/flarum-ext-typewriter",
+        "forum": "https://discuss.flarum.org/d/30720"
     },
     "extra": {
         "flarum-extension": {
