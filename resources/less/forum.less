@@ -1,0 +1,32 @@
+.TypeWriterButtonWrapper {
+    position: relative;
+}
+
+.TypeWriterIntroductionPopup {
+    position: absolute;
+    bottom: 25px;
+    right: -60px;
+    background: var(--alert-bg);
+    color: var(--alert-color);
+    box-shadow: 0 0 3px var(--shadow-color);
+    border-radius: var(--border-radius);
+    padding-left: 10px; // No padding on the right because the button already has internal padding
+    white-space: nowrap;
+
+    &::before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid var(--alert-bg);
+        position: absolute;
+        top: 100%;
+        right: 70px;
+    }
+
+    .Button {
+        padding: 10px 0;
+    }
+}

@@ -14,6 +14,16 @@ app.initializers.add('typewriter', () => {
     app.extensionData
         .for('clarkwinkelmann-typewriter')
         .registerSetting({
+            setting: settingsPrefix + 'muteByDefault',
+            type: 'switch',
+            label: app.translator.trans(translationPrefix + 'muteByDefault'),
+        })
+        .registerSetting({
+            setting: settingsPrefix + 'showIntroductionPopup',
+            type: 'switch',
+            label: app.translator.trans(translationPrefix + 'showIntroductionPopup'),
+        })
+        .registerSetting({
             setting: settingsPrefix + 'defaultFile',
             type: 'text',
             label: app.translator.trans(translationPrefix + 'defaultFile'),

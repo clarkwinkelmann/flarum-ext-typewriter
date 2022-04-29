@@ -1,9 +1,12 @@
 import app from 'flarum/forum/app';
 import {extend} from 'flarum/common/extend';
+import Button from 'flarum/common/components/Button';
 import Tooltip from 'flarum/common/components/Tooltip';
 import Composer from 'flarum/forum/components/Composer';
 import ComposerBody from 'flarum/forum/components/ComposerBody';
 import ComposerButton from 'flarum/forum/components/ComposerButton';
+
+let showIntroductionPopup = window.localStorage.getItem('hideTypewriterIntroductionPopup') === '1' ? false : null;
 
 interface Sound {
     keys?: string
@@ -16,7 +19,9 @@ const loadedFiles: {
 } = {};
 
 function isMuted(): boolean {
-    return app.session.user?.preferences().muteTypewriter;
+    const preferenceValue = app.session.user?.preferences().muteTypewriter;
+
+    return preferenceValue === null ? app.forum.attribute('typewriterMuteByDefault') : preferenceValue;
 }
 
 function loadFile(file: string) {
@@ -54,6 +59,11 @@ function loadFiles() {
 }
 
 function playFile(file: string) {
+    if (showIntroductionPopup === null && app.forum.attribute('typewriterShowPopup')) {
+        showIntroductionPopup = true;
+        m.redraw();
+    }
+
     if (isMuted()) {
         return;
     }
@@ -107,28 +117,49 @@ app.initializers.add('typewriter', () => {
             return;
         }
 
-        const muted = app.session.user.preferences().muteTypewriter;
+        const preferenceValue = app.session.user.preferences().muteTypewriter;
+        const muted = preferenceValue === null ? app.forum.attribute('typewriterMuteByDefault') : preferenceValue;
 
-        items.add('typewriter', Tooltip.component({
-            text: app.translator.trans('clarkwinkelmann-typewriter.forum.mute'),
-        }, ComposerButton.component({
-            icon: 'typewriter-mute fas fa-' + (muted ? 'volume-mute' : 'volume-up'),
-            onclick: () => {
-                this.muteTypewriterLoading = true;
+        items.add('typewriter', m('span.TypeWriterButtonWrapper', [
+            Tooltip.component({
+                text: app.translator.trans('clarkwinkelmann-typewriter.forum.' + (muted ? 'enable' : 'mute')),
+            }, ComposerButton.component({
+                icon: 'typewriter-mute fas fa-' + (muted ? 'volume-mute' : 'volume-up'),
+                onclick: () => {
+                    showIntroductionPopup = false;
+                    this.muteTypewriterLoading = true;
 
-                app.session.user.savePreferences({muteTypewriter: !muted}).then(() => {
-                    this.muteTypewriterLoading = false;
-                    m.redraw();
+                    app.session.user.savePreferences({muteTypewriter: !muted}).then(() => {
+                        this.muteTypewriterLoading = false;
+                        m.redraw();
 
-                    loadFiles();
-                });
-            },
-            loading: this.muteTypewriterLoading,
-        })), 10);
+                        loadFiles();
+                    });
+                },
+                loading: this.muteTypewriterLoading,
+            })),
+            showIntroductionPopup ? m('.TypeWriterIntroductionPopup', [
+                app.translator.trans('clarkwinkelmann-typewriter.forum.introductionMessage'),
+                Button.component({
+                    'aria-label': app.translator.trans('core.lib.alert.dismiss_a11y_label'),
+                    icon: 'fas fa-times',
+                    class: 'Button Button--link Button--icon',
+                    onclick() {
+                        showIntroductionPopup = false;
+                        window.localStorage.setItem('hideTypewriterIntroductionPopup', '1');
+                    },
+                }),
+            ]) : null,
+        ]), 10);
     });
 
     extend(ComposerBody.prototype, 'oncreate', function () {
         loadFiles();
+
+        // If the user already made a choice, never show the popup again
+        if (app.session.user?.preferences().muteTypewriter !== null) {
+            showIntroductionPopup = false;
+        }
 
         this.element.addEventListener('keydown', composerKeyDown);
     });

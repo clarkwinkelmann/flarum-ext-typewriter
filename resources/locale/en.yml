@@ -1,6 +1,8 @@
 clarkwinkelmann-typewriter:
     admin:
         settings:
+            muteByDefault: Mute by default
+            showIntroductionPopup: Show introduction popup the first time
             defaultFile: Default sound file
             sounds: Additional sounds
             head:
@@ -9,4 +11,6 @@ clarkwinkelmann-typewriter:
             add: Add sound
 
     forum:
+        enable: Enable typing sounds
         mute: Mute typing sounds
+        introductionMessage: Click to enable or mute typing sounds
